@@ -30,7 +30,7 @@ setInterval(function() {
     }
 }, 1000);
 
-//Secoundary timer 
+//Secondary timer 
 setInterval(function() {
   // active when no mouse activity is detected
   // increment inactive time by 1
