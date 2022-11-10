@@ -2,7 +2,7 @@
 
 //    When a user opens the refo profile a timer starts
 //    Timer pauses when opened in a new tab (in the same window)
-//    Timer pauses when window is minamized
+//    Timer pauses when window is minimized
 //    Timer pauses after 1 minute of inactivity and deducts 1 minute from total time
 //      Inactivity is also applied when open in another window and there is no mouse activity
 var time = 0;
@@ -10,6 +10,7 @@ var inactiveTime = 0
 var mouseEvent = true;
 var isPaused = false;
 var timeout;
+
 
 //Primary Timer
 setInterval(function() {
@@ -19,7 +20,7 @@ setInterval(function() {
         time++;
         document.getElementById("active-time").innerHTML = "Active Time: " + time; 
     }
-  // if the time inactive is greater than 59s + 1000ms (60s) 
+  // if the time inactive for more than 59s + 1000ms (60s) 
   // time is paused
     if(inactiveTime >= 59) {
       time--;
@@ -62,7 +63,7 @@ document.onmousemove = function(){
   
 }
 
-// pauses timer when another tab is opened in the same tab or when another window is over it
+// pauses timer when anoter tab is opened in the same tab
 document.addEventListener('visibilitychange', function (event) {
   if (document.hidden) {
       isPaused = true;
@@ -73,5 +74,10 @@ document.addEventListener('visibilitychange', function (event) {
 });
 
 
+// When instance of the page is closed send an ajax request
+// window.onbeforeunload = function () {
+    // ajaxRequest.open();
+    // ajaxRequest.send("time=" + time);
+// }
 
   
