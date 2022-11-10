@@ -62,7 +62,7 @@ document.onmousemove = function(){
   
 }
 
-// pauses timer when anoter tab is opened in the same tab
+// pauses timer when another tab is opened in the same tab or when another window is over it
 document.addEventListener('visibilitychange', function (event) {
   if (document.hidden) {
       isPaused = true;
