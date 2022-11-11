@@ -1,16 +1,35 @@
 <!DOCTYPE html>
-<html style="font-family: Arial, Helvetica, sans-serif;">
+<html>
     <head>
         
     </head>
     <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+       p {
+        padding-left: 50px;
+        color: #fff;
+       }
+
+       canvas {visibility: hidden;}
+       button {
+        border-radius: 15px;
+        background-color: #fff;
+        margin-left: 50px;
+        }
     </style>
-    <body style="margin: 0; " onmousemove="showCoords(event)" onmouseout="clearCoor()">
-        <canvas id="screen" width="1920" height="960" style=" margin: 0; border:1px solid #000; position: fixed;"></canvas>
-        <p style="position: fixed;" id="coords"></p>
-        <div id="mouseevent" style="padding:50px 50px 10px;">Mouse is not moving</div>
-        <p id="active-time" style="padding-left: 50px;">Active Time: 0</p>
-        <p id="inactive-time" style="padding-left: 50px;">Inactive Time: 0</p>
+    <body style="margin: 0; background-image: url(https://i.ibb.co/TMM9vbv/background.png);" onmousemove="showCoords(event)" onmouseout="clearCoor()">
+        
+        <section id="page" style="position: absolute;">
+            <p id="coords"></p>
+            <p id="mouseevent">Mouse is not moving</p>
+            <p id="active-time">Active Time: 0</p>
+            <p id="inactive-time">Inactive Time: 0</p>
+            <button onclick="download_image()">Get heatmap</button>
+        </section>
+        <canvas id="screen" width="1900" height="952"></canvas>
+        
         
 
         <script src="mouseevent.js"></script>
