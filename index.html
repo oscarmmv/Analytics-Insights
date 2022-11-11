@@ -3,10 +3,18 @@
     <head>
         
     </head>
-    <body style="height: 200vh; margin: 0;">
-        <div id="mouseevent" style="padding:50px 50px 10px;"></div>
+    <style>
+    </style>
+    <body style="margin: 0; " onmousemove="showCoords(event)" onmouseout="clearCoor()">
+        <canvas id="screen" width="1920" height="960" style=" margin: 0; border:1px solid #000; position: fixed;"></canvas>
+        <p style="position: fixed;" id="coords"></p>
+        <div id="mouseevent" style="padding:50px 50px 10px;">Mouse is not moving</div>
         <p id="active-time" style="padding-left: 50px;">Active Time: 0</p>
         <p id="inactive-time" style="padding-left: 50px;">Inactive Time: 0</p>
+        
+
         <script src="mouseevent.js"></script>
+        <script src="heatmap.js"></script>
     </body>
 </html>
+
