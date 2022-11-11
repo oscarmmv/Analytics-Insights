@@ -11,8 +11,6 @@
         padding-left: 50px;
         color: #fff;
        }
-
-       canvas {visibility: hidden;}
        button {
         border-radius: 15px;
         background-color: #fff;
@@ -26,7 +24,8 @@
             <p id="mouseevent">Mouse is not moving</p>
             <p id="active-time">Active Time: 0</p>
             <p id="inactive-time">Inactive Time: 0</p>
-            <button onclick="download_image()">Get heatmap</button>
+            <button id="heatmap-toggle" onclick="toggleHeatmap()"">Toggle heatmap</button>
+            <button onclick="downloadImage()">Download heatmap</button>
         </section>
         <canvas id="screen" width="1900" height="952"></canvas>
         
