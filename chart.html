@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="chart-wrapper">
+            <div id="chart-margins">
+                <h1>Visits by Time</h1>
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        <button id="daily-data" onclick="updateDaily()">
+            Daily
+        </button>
+        <button id="weekly-data" onclick="updateWeekly()">
+            Weekly
+        </button>
+        <button onclick="window.location.href='/index.html'">Heat Map</button>
+        <style>
+            body {
+                background-color: #f7f7f7;
+            }
+            #chart-wrapper {
+                width: 550px;
+                height: 325px;
+                background-color: #fff;
+                border-radius: 15px;
+                border: solid 1px #dddddd;
+            }
+            #chart-margins {
+                width: 525px;
+                margin: 0 auto;
+                margin-top: 17px;
+            }
+            h1 {
+                font-size: 16px;
+                font-family: "Helvetica",Arial,sans-serif;
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="activity-chart.js"></script>
+
+    </body>
+</html>
+
