@@ -29,6 +29,7 @@ setInterval(function() {
       time-=60;
     }
   console.log(time);
+  document.getElementById("active-time").innerHTML = time;  
 }, 1000);
 
 //Secondary timer 
