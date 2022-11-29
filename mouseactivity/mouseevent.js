@@ -19,13 +19,13 @@ setInterval(function() {
     if(!isPaused) {
         time++;
     }
-  // if the time inactive for more than 59s + 1000ms (60s) 
+
   // time is paused
-    if(inactiveTime >= 59) {
+    if(inactiveTime >= 60) {
       time--;
     }
   // time spent inactive is dedcuted from total active time
-    if(inactiveTime == 58) {
+    if(inactiveTime == 59) {
       time-=60;
     }
   console.log(time);
