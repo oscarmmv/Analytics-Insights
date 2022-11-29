@@ -37,7 +37,6 @@ setInterval(function() {
   // increment inactive time by 1
     if(!mouseEvent) {
         inactiveTime++;
-        document.getElementById("inactive-time").innerHTML = "Inactive Time: " + inactiveTime; 
     }
   console.log("inactive: " +inactiveTime);
 }, 1000);
