@@ -18,7 +18,6 @@ setInterval(function() {
   // increment time by 1
     if(!isPaused) {
         time++;
-        document.getElementById("active-time").innerHTML = "Active Time: " + time; 
     }
   // if the time inactive for more than 59s + 1000ms (60s) 
   // time is paused
