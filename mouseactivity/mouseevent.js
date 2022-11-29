@@ -29,6 +29,7 @@ setInterval(function() {
     if(inactiveTime == 58) {
       time-=60;
     }
+  console.log(time);
 }, 1000);
 
 //Secondary timer 
@@ -39,14 +40,13 @@ setInterval(function() {
         inactiveTime++;
         document.getElementById("inactive-time").innerHTML = "Inactive Time: " + inactiveTime; 
     }
+  console.log("inactive: " +inactiveTime);
 }, 1000);
 
 // mouse is moving
 function mouseMoveEventHandler() {
     mouseEvent = true;
     inactiveTime = 0;
-    document.getElementById("inactive-time").innerHTML = "Inactive Time: " + inactiveTime; 
-    document.getElementById("mouseevent").innerHTML = "Mouse is moving"; 
 }
 
 // calls the event handler when mouse moves
@@ -57,8 +57,6 @@ document.onmousemove = function(){
   clearTimeout(timeout);
   timeout = setTimeout(function(){
     mouseEvent = false;
-    document.getElementById("mouseevent").innerHTML = "Mouse is not moving";
-
   }, 10);  
   
 }
