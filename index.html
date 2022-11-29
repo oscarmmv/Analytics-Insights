@@ -4,37 +4,10 @@
         
     </head>
     <style>
-        * {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-       p {
-        padding-left: 50px;
-        color: #fff;
-       }
-       button {
-        border-radius: 15px;
-        background-color: #fff;
-        margin-left: 50px;
-        }
-    </style>
-    <body style="margin: 0; background-image: url(https://i.ibb.co/TMM9vbv/background.png);" onmousemove="showCoords(event)" onmouseout="clearCoor()">
-        <section id="page" style="position: absolute;">
-            <p id="coords"></p>
-            <p id="mouseevent">Mouse is not moving</p>
-            <p id="active-time">Active Time: 0</p>
-            <p id="inactive-time">Inactive Time: 0</p>
-            <button id="heatmap-toggle" onclick="toggleHeatmap()"">Toggle heatmap</button>
-            <br><br>
-            <button onclick="downloadImage()">Download heatmap</button>
-            <br><br>
-            <button onclick="window.location.href='/chart.html'">Chart</button>
-        </section>
-        <canvas id="screen" width="1900" height="952"></canvas>
-        <button onclick="location.href='https://oscarmmv.github.io/Analytics-Insights/chart.html'">Heat Map</button>
-        
-
-        <script src="mouseevent.js"></script>
-        <script src="heatmap.js"></script>
+        </style>
+        <button onclick="location.href='/chart/chart_demo.html';">Chart</button>
+        <br><br>
+        <button onclick="location.href='/heatmap/demo/heatmap_demo.html';">Heat Map</button>
     </body>
 </html>
 
