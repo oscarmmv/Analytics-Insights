@@ -1,6 +1,8 @@
 'use strict';
+import { time } from '../mouseactivity/mouseevent';
 
 if (typeof module !== 'undefined') module.exports = heatmap;
+
 
 function heatmap(canvas) {
     if (!(this instanceof heatmap)) return new heatmap(canvas);
@@ -126,7 +128,6 @@ heatmap.prototype = {
         }
     },
 
-    
     _createCanvas: function () {
         if (typeof document !== 'undefined') {
             return document.createElement('canvas');
