@@ -126,6 +126,7 @@ heatmap.prototype = {
         }
     },
 
+    
     _createCanvas: function () {
         if (typeof document !== 'undefined') {
             return document.createElement('canvas');
