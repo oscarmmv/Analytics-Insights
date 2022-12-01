@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            * { margin: 0; }
+            .container { width: 100vw; height: 100vh; }
+        </style>
+    </head>
+    <body>
+        <div class="container">  
+            <canvas id="canvas" ></canvas>
+        </div>
+        <button onclick="getPoints()">Get Points</button>
+
+        <script src="../heatmap.js"></script>
+        <script src="data.js"></script>
+        <script>
+            canvas.width  = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            
+            var dataPoints = [];
+            var json = JSON.stringify(dataPoints);
+
+            function get(id) {
+                return document.getElementById(id);
+            }
+
+            var heat = heatmap('canvas').data(data).max(18),
+                frame;
+
+            function draw() {
+                console.time('draw');
+                heat.draw();
+                console.timeEnd('draw');
+                frame = null;
+                dataPoints.push(dataPoints);
+                console.log(dataPoints);
+            }
+
+            draw();
+
+            get('canvas').onmousemove = function (e) {
+                heat.add([e.layerX, e.layerY, 1]);
+                frame = frame || window.requestAnimationFrame(draw);
+            };
+
+            var radius = get('radius'),
+                blur = get('blur'),
+                changeType = 'oninput' in radius ? 'oninput' : 'onchange';
+
+            radius[changeType] = blur[changeType] = function (e) {
+                heat.radius(+radius.value, +blur.value);
+                frame = frame || window.requestAnimationFrame(draw);
+            };
+
+            function getPoints() {
+                window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+                window.requestFileSystem(window.PERSISTENT, 1024, function(fs) {
+                    fs.root.getFile('mystorage.txt', {create: true, exclusive: true}, function(file) {
+                        file.createWriter(function(writer) {
+                            var blob = new Blob(["putdatahere"], {type: 'text/plain'});
+                            writer.write(blob);
+                        });
+                    });
+                }, function() {
+                    console.log("Could not access file system");
+                });
+            }
+        </script>
+    </body>
+</html>

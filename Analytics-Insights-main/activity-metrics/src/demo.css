@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Muli');
+
+body {
+    background-color: #f7f7f7;
+}
+h1 {
+    font-family: 'Muli';
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+.analytics {
+    width: 550px;
+    height: 330px;
+}
+#metrics-wrapper {
+    padding: 20px;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 25px;
+    border: solid 1px #dddddd;
+}
