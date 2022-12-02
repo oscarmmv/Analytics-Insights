@@ -1,10 +1,22 @@
 'use strict';
 
 if (typeof module !== 'undefined') module.exports = heatmap;
-var dataPoint = [];
-var alldata = []
+
+// returns user activity 
+
+
+var userActivity = {}
+    var dataPoint = [];
+    var timeOffPage = []
+    var exitPoints = {}
+ 
+
+var exitCause;
+
 
 var coords;
+var exited = false;
+var returned = false;
 var x;
 var y;
 var UserPoints = {}
@@ -46,16 +58,11 @@ heatmap.prototype = {
 
     add: function (point) {
         this._data.push(point);
-        dataPoint.push(point)
+        
         coords = point.toString();
         x = parseInt(coords.split(',')[0])
         y = parseInt(coords.split(',')[1])
-        UserPoints = {
-            x: x,
-            y: y,
-            time: time
-        }
-        alldata.push(UserPoints);
+        dataPoint.push([x, y]);
         return this;
     },
 
@@ -186,15 +193,15 @@ setInterval(function() {
     if(inactiveTime == 59) {
       time-=60;
     }
-  document.getElementById("active-time").innerHTML = time + "s";  
+
 }, 1000);
 
 //Secondary timer 
 setInterval(function() {
   // active when no mouse activity is detected
   // increment inactive time by 1
-    if(!mouseEvent) {
-        inactiveTime++;
+    if(!mouseEvent || ! isViewingRefo) {
+        inactiveTime ++;
     }
 }, 1000);
 
@@ -216,21 +223,40 @@ document.onmousemove = function(){
   
 }
 
+
 // pauses timer when anoter tab is opened in the same tab
 document.addEventListener('visibilitychange', function (event) {
   if (document.hidden) {
       isPaused = true;
       mouseEvent = true;
       isViewingRefo = false;
+      exited = true;
   } else {
+      returned = true;
       isPaused = false;
       isViewingRefo = true;
-      // abortTimer();
   }
+    if(exited && returned) {
+        exited = false;
+        returned = false;
+        exitPoints = {
+            start: time,
+            end: time + inactiveTime,
+        }
+        timeOffPage.push(exitPoints);
+    }
+  
+  
 });
 
 function activityObject() {
-    console.log(alldata);
+    userActivity = {
+        id: 'uuid',
+        data: dataPoint,
+        exitPoints: timeOffPage,
+        time: time
+    }
+    console.log(userActivity);
 }
 
 function timeHandler(handle) {
