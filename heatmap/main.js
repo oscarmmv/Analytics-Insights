@@ -7,7 +7,7 @@ var alldata = []
 var coords;
 var x;
 var y;
-var thePoints = {}
+var UserPoints = {}
 function heatmap(canvas) {
     if (!(this instanceof heatmap)) return new heatmap(canvas);
 
@@ -50,12 +50,12 @@ heatmap.prototype = {
         coords = point.toString();
         x = parseInt(coords.split(',')[0])
         y = parseInt(coords.split(',')[1])
-        thePoints = {
+        UserPoints = {
             x: x,
             y: y,
             time: time
         }
-        alldata.push(thePoints);
+        alldata.push(UserPoints);
         return this;
     },
 
