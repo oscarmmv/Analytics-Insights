@@ -48,8 +48,8 @@ heatmap.prototype = {
         this._data.push(point);
         dataPoint.push(point)
         coords = point.toString();
-        x = coords.split(',')[0]
-        y = coords.split(',')[1]
+        x = parseInt(coords.split(',')[0])
+        y = parseInt(coords.split(',')[1])
         thePoints = {
             x: x,
             y: y,
