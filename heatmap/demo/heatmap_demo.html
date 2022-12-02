@@ -2,19 +2,32 @@
 <html>
     <head>
         <style>
-            * { margin: 0; overflow-x: hidden;}
-            .container { width: 100vw; height: 100vh; }
+            * { 
+                margin: 0; }
+                .container { width: 100vw; height: 100vh; 
+                overflow: hidden;
+                }
+            button {
+                position: absolute;
+                margin-top: -100px;
+            }
         </style>
     </head>
     <body>
         <div class="container">  
             <canvas id="canvas" ></canvas>
         </div>
-        <script src="../heatmap.js"></script>
+        <button onclick="activityObject()">Get User Data</button>
+
+        <script src="../main.js"></script>
         <script src="data.js"></script>
         <script>
             canvas.width  = window.innerWidth;
             canvas.height = window.innerHeight;
+            
+            
+            var dataPoints = [];
+            
 
             function get(id) {
                 return document.getElementById(id);
@@ -24,9 +37,9 @@
                 frame;
 
             function draw() {
-                console.time('draw');
+           
                 heat.draw();
-                console.timeEnd('draw');
+ 
                 frame = null;
             }
 
@@ -45,6 +58,9 @@
                 heat.radius(+radius.value, +blur.value);
                 frame = frame || window.requestAnimationFrame(draw);
             };
+
+
+   
         </script>
     </body>
 </html>
