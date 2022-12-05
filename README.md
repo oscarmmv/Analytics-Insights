@@ -36,3 +36,10 @@ Takes in an array of timestamps and compilies it for chart.js
 
 ### Example for daily timestamps
 ``` [Mon Dec 03,Mon Dec 03,Mon Dec 03,Mon Dec 04,Mon Dec 04,Mon Dec 05,Mon Dec 05]```
+
+# Activity Metrics
+Calculates a metrics based on increase of seconds, number of clicks per second and number of handle clicks
+
+# Handle View Time (WIP)
+[Handle View Time](http://127.0.0.1:5500/index.html)
+Times the seconds a user is viewing another page after clicking a handle.
