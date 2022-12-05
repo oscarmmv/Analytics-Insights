@@ -27,4 +27,9 @@ Returns a user activity object
   time: 17
 } 
 ```
+## Activity Graph
+[User Activity](https://github.com/oscarmmv/Analytics-Insights/blob/main/heatmap/demo/useractivity.js)
+Takes in an array of timestamps and compilies it for chart.js
 
+Example 
+``` [9:18:28,10:59:58,13:38:21,15:00:09,19:22:18,20:08:57,22:52:28,23:48:32]```
