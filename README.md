@@ -31,8 +31,8 @@ Returns a user activity object
 [User Activity](https://github.com/oscarmmv/Analytics-Insights/blob/main/heatmap/demo/useractivity.js)
 Takes in an array of timestamps and compilies it for chart.js
 
-Example for daily timestamps
+## Example for daily timestamps
 ``` [9:18:28,10:59:58,13:38:21,15:00:09,19:22:18,20:08:57,22:52:28,23:48:32]```
 
-Example for daily timestamps
+## Example for daily timestamps
 ``` [Mon Dec 03,Mon Dec 03,Mon Dec 03,Mon Dec 04,Mon Dec 04,Mon Dec 05,Mon Dec 05]```
