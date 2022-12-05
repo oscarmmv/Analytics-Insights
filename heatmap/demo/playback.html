@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            * { 
+                margin: 0; }
+                .container { width: 100vw; height: 100vh; 
+                overflow: hidden;
+                }
+            button {
+                position: absolute;
+                margin-top: -100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">  
+            <canvas id="canvas" ></canvas>
+            <button>Get <Object></Object></button>
+        </div>
+        <button onclick="activityObject()">Get User Data</button>
+
+        <script src="./useractivity.js"></script>
+        <script src="./playback.js"></script>
+        <script>
+            canvas.width  = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            function get(id) {
+                return document.getElementById(id);
+            }
+            var heat = heatmap('canvas').data(data).max(18),
+                frame;
+            function draw() {
+                heat.draw();
+                frame = null;
+            }
+             draw();
+        </script>
+    </body>
+</html>
