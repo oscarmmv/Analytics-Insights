@@ -25,10 +25,6 @@
         <script>
             canvas.width  = window.innerWidth;
             canvas.height = window.innerHeight;
-
-            function get(id) {
-                return document.getElementById(id);
-            }
             var heat = heatmap('canvas').data(data).max(18),
                 frame;
             function draw() {
