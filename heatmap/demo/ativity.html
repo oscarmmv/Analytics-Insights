@@ -11,6 +11,9 @@
                 position: absolute;
                 margin-top: -100px;
             }
+            body {
+                background-image: url(https://i.ibb.co/LtgnwFr/Screenshot-2022-12-07-at-14-33-17-Recruit-For-Me-Community-Building-Job-Searching-and-Hiring-Help.png);
+            }
         </style>
     </head>
     <body>
@@ -48,20 +51,36 @@
             draw();
 
             // Time each point is added
-            setInterval(function checkMousePos(){
+            var intensity = 0;
+        
+            setInterval(function checkMousePos(event){
+                
                 document.addEventListener('mousemove', function(event){
                     x = event.pageX;
                     y = event.pageY;
-                })
-                if(x && y) {
-                    heat.add([x, y, 0]);
+                    intensity = 0;
+                })        
+                intensity++
+                    if(intensity<20) {
+                        heat.add([x, y, 1]);
+                    }
+                    frame = frame || window.requestAnimationFrame(draw);
+                
+            }, 60);
+            document.addEventListener('click', function(event){
+                console.log('called')
+                    
+                    x = event.pageX;
+                    y = event.pageY;
+                for(let i=0; i<35; i++) {
+
+            
+                  
+                    heat.add([x, y, 1]);
                     frame = frame || window.requestAnimationFrame(draw);
                 }
-                x = null;
-                y = null;
-            }, 40);
-
-
+            
+            });
             var radius = get('radius'),
                 blur = get('blur'),
                 changeType = 'oninput' in radius ? 'oninput' : 'onchange';

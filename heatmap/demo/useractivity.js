@@ -20,6 +20,7 @@ var returned = false;
 var x;
 var y;
 var UserPoints = {}
+
 function heatmap(canvas) {
     if (!(this instanceof heatmap)) return new heatmap(canvas);
 
@@ -58,7 +59,6 @@ heatmap.prototype = {
 
     add: function (point) {
         this._data.push(point);
-        
         coords = point.toString();
         x = parseInt(coords.split(',')[0])
         y = parseInt(coords.split(',')[1])
