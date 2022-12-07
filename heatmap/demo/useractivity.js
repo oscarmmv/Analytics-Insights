@@ -10,10 +10,6 @@ var userActivity = {}
     var timeOffPage = []
     var exitPoints = {}
  
-
-var exitCause;
-
-
 var coords;
 var exited = false;
 var returned = false;
