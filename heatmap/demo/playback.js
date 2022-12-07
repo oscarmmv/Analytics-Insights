@@ -28,14 +28,22 @@ var totalTime = 49;
 
 function pause() {
     clearInterval(update);
+    setInterval(function () {
+        playbackTime--;}
+        ,1000);
+   
 }
 function play() {
     const update = setInterval(updateData, 1);
     updateData();
+    setInterval(function () {
+        playbackTime++;}
+        ,1000);
 }
 
 function restart() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    playbackTime = 0;
     i=0;
 
 }
