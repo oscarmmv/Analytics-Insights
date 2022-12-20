@@ -1,97 +1,135 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            * { 
-                margin: 0; }
-                .container { width: 100vw; height: 100vh; 
-                overflow: hidden;
-                }
-            button {
-                position: absolute;
-                margin-top: -100px;
-            }
-            body {
-                background-image: url(https://i.ibb.co/LtgnwFr/Screenshot-2022-12-07-at-14-33-17-Recruit-For-Me-Community-Building-Job-Searching-and-Hiring-Help.png);
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">  
-            <canvas id="canvas" ></canvas>
-            <button>Get <Object></Object></button>
-        </div>
-        <button onclick="activityObject()">Get User Data</button>
 
-        <script src="./useractivity.js"></script>
-        <script src="./data.js"></script>
-        <script>
-            canvas.width  = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            
-            var dataPoints = [];
-            var x;
-            var y;
+<head>
+    <style>
+        * {
+            margin: 0;
+        }
 
-            function get(id) {
-                return document.getElementById(id);
-            }
+        .container {
+            width: 100vw;
 
-            var heat = heatmap('canvas').data(data).max(18),
-                frame;
+            height: 1080px;
+            overflow: hidden;
+        }
 
-            function draw() {
-           
-                heat.draw();
- 
-                frame = null;
-            }
+        body {
+            overflow: hidden;
+            background-image: url(https://i.ibb.co/LtgnwFr/Screenshot-2022-12-07-at-14-33-17-Recruit-For-Me-Community-Building-Job-Searching-and-Hiring-Help.png);
+        }
 
-            draw();
+        div {
+            margin-left: 5px;
+        }
 
-            // Time each point is added
-            var intensity = 0;
-        
-            setInterval(function checkMousePos(event){
-                
-                document.addEventListener('mousemove', function(event){
-                    x = event.pageX;
-                    y = event.pageY;
-                    intensity = 0;
-                })        
-                intensity++
-                    if(intensity<20) {
-                        heat.add([x, y, 1]);
-                    }
-                    frame = frame || window.requestAnimationFrame(draw);
-                
-            }, 60);
-            document.addEventListener('click', function(event){
-                console.log('called')
-                    
-                    x = event.pageX;
-                    y = event.pageY;
-                for(let i=0; i<35; i++) {
+        button {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #393939;
+            color: #fefefe;
+            border-radius: 15px;
+            border: none;
+        }
 
-            
-                  
-                    heat.add([x, y, 1]);
-                    frame = frame || window.requestAnimationFrame(draw);
-                }
-            
-            });
-            var radius = get('radius'),
-                blur = get('blur'),
-                changeType = 'oninput' in radius ? 'oninput' : 'onchange';
+        #refresh {
+            margin: 20px 8px;
+            width: 90%;
+        }
 
-            radius[changeType] = blur[changeType] = function (e) {
-                heat.radius(+radius.value, +blur.value);
-                frame = frame || window.requestAnimationFrame(draw);
-            };
+        #play-playback {
+            margin: 60px 110px;
+            position: absolute;
+            z-index: 1;
+        }
 
-   
-        </script>
-    </body>
+        #playback-control {
+            position: absolute;
+            display: none;
+        }
+
+        #pop-up {
+            top: 0;
+            background-color: red;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+
+        button:hover {
+            background-color: #5f5f5f;
+            color: cyan;
+        }
+
+        section {
+            width: 210px;
+            position: fixed;
+            top: 50px;
+            left: 50px;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: #c4b9ed;
+        }
+
+        canvas {
+            position: fixed;
+        }
+
+        #delayed-canvas {
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #test-divs {
+            width: 900px;
+            height: 400px;
+            margin-left: 435px;
+            margin-top: 210px;
+            background-color: transparent;
+        }
+
+        #handle-test {
+            margin-left: 5%;
+            width: 90%;
+            height: 45px;
+            margin-bottom: 13px;
+            color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="play-playback" onclick="
+        playback(dataPoints);
+        document.getElementById('playback-control').style.display = 'block';
+        activityObject();
+        pageExit(temp[0][0], exitPoints[0][1])
+        ">View Heatmap</button>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <canvas id="delayed-canvas"></canvas>
+    </div>
+    <!-- <div id="pop-up">pop up</div> -->
+
+    <section id="test-divs">
+        <div id="handle-test" onmouseover="mouseHover=true" onmouseout="mouseHover=false">Github</div>
+        <div id="handle-test" onmouseover="mouseHover=true" onmouseout="mouseHover=false">Instagram</div>
+        <div id="handle-test" onmouseover="mouseHover=true" onmouseout="mouseHover=false">Linkedin</div>
+        <div id="handle-test" onmouseover="mouseHover=true" onmouseout="mouseHover=false">Youtube</div>
+    </section>
+    <section id="playback-control">
+        <div id="playback-time">0s</div><br>
+        <button id="pause" onclick="pause()">Pause</button>
+        <button id="play" onclick="play()">Play</button>
+        <button id="restart" onclick="restart()">Restart</button>
+        <button id="refresh" onclick="window.location.reload();">New Heatmap</button>
+    </section>
+
+    <script src="./useractivity.js"></script>
+    <script src="./playback.js"></script>
+    <script src="./mouseevent.js"></script>
+</body>
+
 </html>
-

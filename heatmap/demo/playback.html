@@ -1,75 +1,140 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            * { 
-                margin: 0; }
-                .container { width: 100vw; height: 100vh; 
-                overflow: hidden;
-                }
-            body {
-                background-image: url(https://i.ibb.co/LtgnwFr/Screenshot-2022-12-07-at-14-33-17-Recruit-For-Me-Community-Building-Job-Searching-and-Hiring-Help.png);
-            }
-            div{
-                margin-left: 5px;
-            }
-            button {
-                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-                margin: 0 5px;
-                padding: 5px 10px;
-                background-color: #393939;
-                color: #fefefe;
-                border-radius: 15px;
-                border: none;
 
-            }
-            button:hover {
-                background-color: #5f5f5f;
-                color: cyan;
-            }
-            section {
-                width: 210px;
-                position: fixed;
-                top:50px;
-                left:50px;
-                padding: 20px;
-                border-radius: 20px;
-                background-color: #c4b9ed;
-            }
-            canvas{
-                position:relative;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">  
-            <canvas id="canvas" ></canvas>
-        </div>
-      
-        <section>
-            <div id="playback-time">0s</div><br>
-            <button onclick="pause()">Pause</button>
-            <button onclick="play()">Play</button>
-            <button onclick="restart()">Restart</button>
-        </section>
+<head>
+    <style>
+        * {
+            margin: 0;
+        }
 
-        <script src="./useractivity.js"></script>
-        <script src="./playback.js"></script>
-        <script>
-            
-            canvas.width  = window.innerWidth;
-            canvas.height = window.innerHeight;
-            var heat = heatmap('canvas').data(data).max(18),
-                frame;
-            function draw() {
-                heat.draw();
-                frame = null;
-            }
-             draw();
+        .container {
+            width: 100vw;
+
+            height: 1080px;
+            overflow: hidden;
+        }
+
+        body {
+            overflow: hidden;
+            background-image: url(https://i.ibb.co/LtgnwFr/Screenshot-2022-12-07-at-14-33-17-Recruit-For-Me-Community-Building-Job-Searching-and-Hiring-Help.png);
+        }
+
+        div {
+            margin-left: 5px;
+        }
+
+        button {
+            position: absolute;
+            z-index: 1;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #393939;
+            color: #fefefe;
+            border-radius: 15px;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #5f5f5f;
+            color: cyan;
+        }
+
+        section {
+            width: 210px;
+            position: fixed;
+            top: 50px;
+            left: 50px;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: #c4b9ed;
+        }
 
 
-          
 
-        </script>
-    </body>
+        canvas {
+            position: fixed;
+        }
+
+        #delayed-canvas {
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #test-divs {
+            width: 900px;
+            height: 400px;
+            margin-left: 435px;
+            margin-top: 210px;
+            background-color: transparent;
+        }
+
+        #handle-test {
+            margin-left: 5%;
+            width: 90%;
+            height: 45px;
+            margin-bottom: 13px;
+            color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="playback(dataPoints);">View Heatmap</button>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <canvas id="delayed-canvas"></canvas>
+    </div>
+
+    <section id="test-divs">
+        <div id="handle-test" onmouseover="mouseHover=true" onmouseout="mouseHover=false">Githyb</div>
+        <div id="handle-test" onmouseover="mouseHover=true" onmouseout="mouseHover=false">Instagram</div>
+        <div id="handle-test" onmouseover="mouseHover=true" onmouseout="mouseHover=false">Linkedin</div>
+        <div id="handle-test" onmouseover="mouseHover=true" onmouseout="mouseHover=false">Youtube</div>
+    </section>
+    <!-- <section>
+        <div id="playback-time">0s</div><br>
+        <button onclick="pause()">Pause</button>
+        <button onclick="play()">Play</button>
+        <button onclick="restart()">Restart</button>
+    </section> -->
+
+    <script src="./useractivity.js"></script>
+    <script src="./playbackV2.js"></script>
+    <script>
+        var dataPoints = []
+        var mouseHover = false;
+        canvas.width = window.innerWidth;
+        canvas.height = 1080;
+
+
+
+        setInterval(function checkMousePos(event) {
+            document.addEventListener('mousemove', function (event) {
+                x = event.pageX;
+                y = event.pageY;
+                intensity = 0;
+            })
+            intensity++
+            if (intensity < 20) {
+                dataPoints.push([x, y]);
+            }
+            if (mouseHover) {
+                dataPoints.push([x, y]);
+            }
+        }, 60);
+
+
+        function mouseOver() {
+            mouseHover = true;
+            console.log('called')
+        }
+        function mouseOut() {
+            mouseHover = false;
+        }
+
+    </script>
+</body>
+
 </html>

@@ -6,10 +6,9 @@ if (typeof module !== 'undefined') module.exports = heatmap;
 
 
 var userActivity = {}
-    var dataPoint = [];
-    var timeOffPage = []
-    var exitPoints = {}
- 
+var dataPoint = [];
+var timeOffPage = []
+var exitPoints = []
 var coords;
 var exited = false;
 var returned = false;
@@ -33,14 +32,14 @@ function heatmap(canvas) {
 
 heatmap.prototype = {
 
-    defaultRadius: 25,
+    defaultRadius: 40,
 
     defaultGradient: {
         0.3: 'blue',
         0.5: 'cyan',
         0.6: 'lime',
-        0.7: 'yellow',
-        1.0: 'red'
+        0.8: 'yellow',
+        0.95: 'red'
     },
 
     data: function (data) {
@@ -68,7 +67,7 @@ heatmap.prototype = {
     },
 
     radius: function (r) {
-        blur = 15;
+        blur = 25;
         var circle = this._circle = this._createCanvas(),
             ctx = circle.getContext('2d'),
             r2 = this._r = r + blur;
@@ -135,7 +134,7 @@ heatmap.prototype = {
 
     _colorize: function (pixels, gradient) {
         for (var i = 0, len = pixels.length, j; i < len; i += 4) {
-            j = pixels[i + 3] * 4; 
+            j = pixels[i + 3] * 4;
 
             if (j) {
                 pixels[i] = gradient[j];
@@ -154,6 +153,7 @@ heatmap.prototype = {
     }
 };
 
+
 // Engagement Metadata
 
 //    When a user opens the refo profile a timer starts
@@ -168,38 +168,42 @@ var mouseEvent = true;
 var isPaused = false;
 var timeout;
 var isViewingRefo = true;
+var timeOffRefo = 0;
 var viewTime = [];
 var handleIdentifier;
 var tid;
 
 
 //Primary Timer
-setInterval(function() {
-  // if the time is not paused 
-  // increment time by 1
-    if(!isPaused) {
-        time++;
+setInterval(function () {
+    // if the time is not paused 
+    // increment time by 1
+    if (!isPaused) {
+        time += 0.1;
     }
 
-  // time is paused
-    if(inactiveTime >= 60) {
-      time--;
+    // time is paused
+    if (Math.round(inactiveTime) >= 60) {
+        time -= 0.1;
     }
-  // time spent inactive is dedcuted from total active time
-    if(inactiveTime == 59) {
-      time-=60;
+    // time spent inactive is dedcuted from total active time
+    if (Math.round(inactiveTime) == 59) {
+        time -= 60;
     }
 
-}, 1000);
+}, 100);
 
 //Secondary timer 
-setInterval(function() {
-  // active when no mouse activity is detected
-  // increment inactive time by 1
-    if(!mouseEvent || ! isViewingRefo) {
-        inactiveTime ++;
+setInterval(function () {
+    // active when no mouse activity is detected
+    // increment inactive time by 1
+    if (!mouseEvent) {
+        inactiveTime += 0.1;
     }
-}, 1000);
+    if (!isViewingRefo) {
+        timeOffRefo += 1;
+    }
+}, 100);
 
 // mouse is moving
 function mouseMoveEventHandler() {
@@ -211,59 +215,48 @@ function mouseMoveEventHandler() {
 window.addEventListener('mousemove', mouseMoveEventHandler);
 
 // mouse is not moving
-document.onmousemove = function(){
-  clearTimeout(timeout);
-  timeout = setTimeout(function(){
-    mouseEvent = false;
-  }, 10);  
-  
+document.onmousemove = function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+        mouseEvent = false;
+    }, 10);
+
 }
 
 
 // pauses timer when anoter tab is opened in the same tab
 document.addEventListener('visibilitychange', function (event) {
-  if (document.hidden) {
-      isPaused = true;
-      mouseEvent = true;
-      isViewingRefo = false;
-      exited = true;
-  } else {
-      returned = true;
-      isPaused = false;
-      isViewingRefo = true;
-  }
-    if(exited && returned) {
+    if (document.hidden) {
+        isPaused = true;
+        mouseEvent = true;
+        isViewingRefo = false;
+        exited = true;
+    } else {
+        returned = true;
+        isPaused = false;
+        isViewingRefo = true;
+
+    }
+    if (exited && returned) {
         exited = false;
         returned = false;
-        exitPoints = {
-            start: time,
-            end: time + inactiveTime,
-        }
+        // [exit time, time of page]
+        exitPoints.push([Math.round(time), Math.round(timeOffRefo)]);
         timeOffPage.push(exitPoints);
+        timeOffRefo = 0;
     }
-  
-  
 });
 
-function activityObject() {
-    userActivity = {
-        id: 'uuid',
-        data: dataPoint,
-        exitPoints: timeOffPage,
-        time: time
-    }
-    console.log(userActivity);
-}
+
 
 function timeHandler(handle) {
-  setTimeout(function() {
-    handleTime++;
-    console.log(handleTime)
-    if(!isViewingRefo) {
-      console.log('called')
-      return
-    }
-  },1000)
-  handleIdentifier = handle;
+    setTimeout(function () {
+        handleTime++;
+        console.log(handleTime)
+        if (!isViewingRefo) {
+            return;
+        }
+    }, 1000)
+    handleIdentifier = handle;
 }
 
