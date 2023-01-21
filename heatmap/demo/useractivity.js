@@ -20,7 +20,6 @@ function heatmap(canvas) {
     if (!(this instanceof heatmap)) return new heatmap(canvas);
 
     this._canvas = canvas = typeof canvas === 'string' ? document.getElementById(canvas) : canvas;
-
     this._ctx = canvas.getContext('2d');
     this._width = canvas.width;
     this._height = canvas.height;
@@ -29,6 +28,8 @@ function heatmap(canvas) {
     this._data = [];
 }
 
+var x;
+var y;
 
 heatmap.prototype = {
 
@@ -107,6 +108,7 @@ heatmap.prototype = {
         ctx.fillRect(0, 0, 1, 256);
 
         this._grad = ctx.getImageData(0, 0, 1, 256).data;
+
 
         return this;
     },
@@ -220,7 +222,6 @@ document.onmousemove = function () {
     timeout = setTimeout(function () {
         mouseEvent = false;
     }, 10);
-
 }
 
 
@@ -241,8 +242,7 @@ document.addEventListener('visibilitychange', function (event) {
         exited = false;
         returned = false;
         // [exit time, time of page]
-        exitPoints.push([Math.round(time), Math.round(timeOffRefo)]);
-        timeOffPage.push(exitPoints);
+        exitPoints.push([Math.round(time), Math.round(timeOffRefo), x, y]);
         timeOffRefo = 0;
     }
 });

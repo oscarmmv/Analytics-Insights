@@ -10,6 +10,11 @@ var playbackTimer;
 var paused = false;
 
 function playback(dataPoints) {
+
+
+
+
+
     isPlaying = true;
     playbackTimer = setInterval(function () {
         if (!paused) {
@@ -18,7 +23,6 @@ function playback(dataPoints) {
     }, 100);
 
     clearInterval(getDataPoints);
-    tempData = dataPoints;
     var datapoints = dataPoints
     var delayedPlayback = []
 
@@ -28,9 +32,13 @@ function playback(dataPoints) {
     var y2;
     var m;
     var b;
-    var index;
+    var temp = [];
     var newData = []
-
+    for (let i = 0; i < datapoints.length; i++) {
+        temp.push([Math.round(datapoints[i][0] * 0.8 + window.innerWidth * 0.1), Math.round(datapoints[i][1] * 0.8 + window.innerHeight * 0.1)])
+    }
+    datapoints = temp;
+    console.log(datapoints)
     for (let i = 0; i < datapoints.length; i++) {
         x1 = datapoints[i][0]
         y1 = datapoints[i][1]
@@ -45,60 +53,59 @@ function playback(dataPoints) {
 
         var newPoint = []
         if (x1 < x2) {
-            newData.push[x1, y1]
             for (let j = x1; j < x2; j += 20) {
+                console.log(x1);
                 var newY = m * j + b
-                newPoint = [j, newY, 100]
+                newPoint = [j, newY + 0.001, 1, 100]
                 newData.push(newPoint)
-
             }
-            newData.push[x2, y2]
         }
         if (x1 > x2) {
-            newData.push[x1, y1]
             for (let j = x1; j > x2; j -= 20) {
+                console.log(x1);
                 var newY = m * j + b
-                var newPoint = [j, newY, 100]
+                var newPoint = [j, newY + 0.001, 1, 100]
                 newData.push(newPoint)
             }
-            newData.push[x2, y2]
         }
 
         if (y1 < y2) {
-            newData.push[x1, y1]
             for (let k = y1; k < y2; k += 20) {
+                console.log(x1);
                 var newX = (k - b) / m
-                newPoint = [newX, k, 100]
+                newPoint = [newX, k + 0.001, 1, 100]
                 newData.push(newPoint)
             }
-            newData.push[x2, y2]
         }
         if (y1 > y2) {
-            newData.push[x1, y1]
             for (let k = y1; k > y2; k -= 20) {
+                console.log(x1);
                 var newX = (k - b) / m
-                newPoint = [newX, k, 100]
+                newPoint = [newX, k + 0.001, 1, 100]
                 newData.push(newPoint)
             }
-            newData.push[x2, y2]
         }
-
+        newData.push([x1, y1, 1])
     }
 
     if (datapoints.length < newData.length) {
         datapoints = newData;
     }
+    console.log(newData);
 
-    for (let i = 0; i < datapoints.length; i++) {
-        if (datapoints[i][2]) {
-            datapoints[i][2] = 1
-            datapoints[i].push(100);
-            delayedPlayback.push([0, 0, 0]);
-        } else {
-            datapoints[i].push(1);
-            delayedPlayback.push(datapoints[i])
-        }
-    }
+
+    // for (let i = 0; i < datapoints.length; i++) {
+    //     console.log(datapoints[i]);
+    //     if (datapoints[i][2]) {
+    //         datapoints[i][2] = 1
+    //         datapoints[i].push(100);
+    //         delayedPlayback.push([0, 0, 0]);
+    //     } else {
+    //         datapoints[i].push(1);
+    //         delayedPlayback.push([1, 1, 1]);
+    //         delayedPlayback.push(datapoints[i])
+    //     }
+    // }
 
     // console.log(delayedPlayback)
 
@@ -116,7 +123,7 @@ function playback(dataPoints) {
     var i = 0;
     var n = 0;
 
-
+    var end = false;
 
 
 
@@ -135,35 +142,44 @@ function playback(dataPoints) {
             }
 
 
-            var index = i;
-            if (data.length > 100 && data.length % 3 === 0) {
-                var thirds = data.length / 3
-                var grad3 = datapoints.slice(0, thirds);
-                var grad2 = datapoints.slice(thirds, (2 * thirds));
-                var grad1 = datapoints.slice((2 * thirds), data.length);
-                if (data[i - 1]) {
+            // var index = i;
+            // if (data.length > 100 && data.length % 3 === 0) {
+            //     var thirds = data.length / 3
+            //     var grad3 = datapoints.slice(0, thirds);
+            //     var grad2 = datapoints.slice(thirds, (2 * thirds));
+            //     var grad1 = datapoints.slice((2 * thirds), data.length);
+            //     if (data[i - 1]) {
+
+            //     }
+            // }
+
+            try {
+                while (datapoints[i][1] % 1 != 0 || !end) {
+                    i++;
+                    end = true;
 
                 }
+            } catch (e) {
+                console.error = function () { }
             }
-
-            if (i >= datapoints.length) {
-                clearInterval(drawPlayback);
-                clearInterval(delayedPlayback);
+            if (typeof datapoints[i] === 'undefined') {
+                console.log("end")
                 activeTimer = false;
                 isPlaying = false;
-
+                clearInterval(drawPlayback);
+                clearInterval(delayedPlayback);
             }
+
+
             draw();
 
             n++;
-            console.log(datapoints.slice(0, n + 1)[n]);
-            while (datapoints.slice(0, n + 1)[n].length === 4) {
-                delayedPlayback.push(datapoints.slice(0, n + 1)[n - 1]);
-                n++;
-                i++;
-                break;
-                // console.log(delayedPlayback);
-            }
+            // console.log(datapoints.slice(0, n + 1)[n]);
+
+            //xxxxaaaxaaaxaaaaaaaxaaaa
+            //xxxxx
+            // aaaaaaa
+
 
 
 
@@ -199,7 +215,7 @@ function playback(dataPoints) {
     // console.log((endTime - startTime).toFixed(1) + ' ms')
 }
 var exitInstances = []
-setInterval(function () {
+var timeCounter = setInterval(function () {
     var displayTime = Math.round(playbackTime);
     if (activeTimer) {
         document.getElementById('playback-time').innerHTML = displayTime;
@@ -246,3 +262,12 @@ function play() {
     }
 }
 
+function clear() {
+    clearInterval(playbackTimer);
+    clearInterval(drawPlayback);
+    clearInterval(drawDelay);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx2.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById('#frame').style.visibility = none
+    console.log('Clear')
+}

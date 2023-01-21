@@ -3,22 +3,20 @@ var mouseHover = false;
 canvas.width = window.innerWidth;
 canvas.height = 1080;
 
-setInterval(function () {
-    if (activeTimer) {
-        document.getElementById('playback-time').innerHTML = Math.round(playbackTime);
-    }
-}, 100)
+
 
 const getDataPoints = setInterval(function checkMousePos(event) {
     document.addEventListener('mousemove', function (event) {
-        x = event.pageX;
-        y = event.pageY;
+        x = event.clientX;
+        y = event.clientY;
     })
     dataPoints.push([x, y]);
     if (mouseHover) {
         dataPoints.push([x, y]);
     }
-}, 60);
+    // console.log(event.clientY)
+    console.log("event.client")
+}, 100);
 
 
 
@@ -42,8 +40,9 @@ function activityObject() {
     userActivity = {
         id: 'uuid',
         data: dataPoints,
-        exitPoints: timeOffPage,
-        time: Math.round(time)
+        exitPoints: exitPoints,
+        time: Math.round(time),
+        resolution: [window.innerWidth, window.innerHeight]
     }
     console.log(userActivity)
 }

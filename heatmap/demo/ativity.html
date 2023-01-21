@@ -2,21 +2,16 @@
 <html>
 
 <head>
+    <script src="https://kit.fontawesome.com/d9d84a2919.js" crossorigin="anonymous"></script>
     <style>
         * {
             margin: 0;
         }
 
-        .container {
-            width: 100vw;
 
-            height: 1080px;
-            overflow: hidden;
-        }
 
         body {
             overflow: hidden;
-            background-image: url(https://i.ibb.co/LtgnwFr/Screenshot-2022-12-07-at-14-33-17-Recruit-For-Me-Community-Building-Job-Searching-and-Hiring-Help.png);
         }
 
         div {
@@ -33,6 +28,11 @@
             border: none;
         }
 
+        .ui {
+            margin-top: 6px;
+            margin-left: 12px;
+        }
+
         #refresh {
             margin: 20px 8px;
             width: 90%;
@@ -44,13 +44,19 @@
             z-index: 1;
         }
 
+        #exit {
+            display: none;
+            margin: 7.6vh 90vw;
+            position: absolute;
+            z-index: 1;
+        }
+
         #playback-control {
             position: absolute;
             display: none;
         }
 
         #pop-up {
-            top: 0;
             background-color: red;
             width: 100px;
             height: 100px;
@@ -64,22 +70,24 @@
 
         section {
             width: 210px;
+            height: 42px;
             position: fixed;
-            top: 50px;
-            left: 50px;
-            padding: 20px;
+            margin-left: -105px;
+            top: 87vh;
+            left: 50vw;
             border-radius: 20px;
-            background-color: #c4b9ed;
+            background-color: rgba(10, 10, 10, 0.5);
         }
 
         canvas {
-            position: fixed;
+            position: absolute;
         }
 
         #delayed-canvas {
             position: fixed;
             height: 100vh;
             width: 100vw;
+            display: none;
         }
 
         #test-divs {
@@ -97,6 +105,19 @@
             margin-bottom: 13px;
             color: transparent;
         }
+
+        #frame {
+            background-image: url(https://i.ibb.co/LtgnwFr/Screenshot-2022-12-07-at-14-33-17-Recruit-For-Me-Community-Building-Job-Searching-and-Hiring-Help.png);
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: calc(80vw + 80px);
+            height: calc(80vh + 80px);
+            margin: calc(-40vh - 40px) 0 0 calc(-40vw - 40px);
+            border: solid black;
+            background-color: rgba(0, 0, 0, 0);
+        }
     </style>
 </head>
 
@@ -104,10 +125,14 @@
     <button id="play-playback" onclick="
         playback(dataPoints);
         document.getElementById('playback-control').style.display = 'block';
+        document.getElementById('exit').style.display = 'block';
+        document.getElementById('frame').style.display = 'block';
         activityObject();
-        pageExit(temp[0][0], exitPoints[0][1])
+        pageExit(temp[0][0], exitPoints[0][1]);
+
         ">View Heatmap</button>
     <div class="container">
+        <div id="frame"></div>
         <canvas id="canvas"></canvas>
         <canvas id="delayed-canvas"></canvas>
     </div>
@@ -120,16 +145,55 @@
         <div id="handle-test" onmouseover="mouseHover=true" onmouseout="mouseHover=false">Youtube</div>
     </section>
     <section id="playback-control">
-        <div id="playback-time">0s</div><br>
-        <button id="pause" onclick="pause()">Pause</button>
-        <button id="play" onclick="play()">Play</button>
-        <button id="restart" onclick="restart()">Restart</button>
-        <button id="refresh" onclick="window.location.reload();">New Heatmap</button>
+        <button class="ui" id="playback-time">0</button>
+        <button class="ui" id="pause" onclick="pause()"><i class="fa-solid fa-pause"></i></button>
+        <button class="ui" id="play" onclick="play()"><i class="fa-solid fa-play"></i></button>
+        <button class="ui" id="restart" onclick="
+        clearInterval(playbackTimer);
+        clearInterval(drawPlayback);
+        clearInterval(drawDelay);
+        playbackTime = 0;
+        activeTimer = true;
+        playback(dataPoints);
+        document.getElementById('playback-control').style.display = 'block';
+        activityObject();
+        pageExit(temp[0][0], exitPoints[0][1]);
+        "><i class="fa-solid fa-rotate-right"></i></i></button>
     </section>
+    <button id="exit" onclick="
+        document.getElementById('frame').style.display = 'none'
+        document.getElementById('playback-control').style.display = 'none';
+        document.getElementById('exit').style.display = 'none';
+        clearInterval(playbackTimer);
+        clearInterval(drawPlayback);
+        clearInterval(drawDelay);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx2.clearRect(0, 0, canvas.width, canvas.height);
+        "><i class="fa-regular fa-circle-xmark"></i></button>
 
     <script src="./useractivity.js"></script>
-    <script src="./playback.js"></script>
+    <script src="./playbackV2.js"></script>
     <script src="./mouseevent.js"></script>
+    <script>
+        const exitPopUp = document.createElement("div");
+        // exitPopUp.setAttribute("id", "pop-up");
+        function testAddDivs(xcoord, ycord) {
+            document.body.appendChild(exitPopUp);
+            var asdasd = xcoord;
+            var bfdfds = ycord;
+            console.log(asdasd, bfdfds)
+            // document.getElementById("pop-up").style.left = xcoord + "px"
+            // document.getElementById("pop-up").style.top = ycord + "px"
+        }
+        var hideButton = document.getElementById("play-playback");
+
+        // Add an event listener to the button that listens for clicks
+        hideButton.addEventListener("click", function () {
+            // When the button is clicked, hide the button
+            hideButton.style.display = "none";
+        });
+    </script>
+
 </body>
 
 </html>
